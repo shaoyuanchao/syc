@@ -16,7 +16,6 @@ $rows = get_rpt_overview_all();
        $rpt_title =  $row['rpt_title'];
        $rpt_count = get_recent_url_action_by_key($url);
        upd_rpt_overview($rpt_title , $rpt_count);                    
-                                                      //参数自增1
     }
    $dis =  get_rpt_overview_all();
    print_r($dis);
