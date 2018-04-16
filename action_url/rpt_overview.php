@@ -12,7 +12,7 @@ php_begin();
 $rows = get_rpt_overview_all();
 
   foreach($rows as $row){                                      //循环开始
-       $url =  $row['url_key'];                       //取url值
+       $url =  $row['url_key'];                               //取url值
        $rpt_title =  $row['rpt_title'];
        $rpt_count = get_recent_url_action_by_key($url);
        upd_rpt_overview($rpt_title , $rpt_count);                    
