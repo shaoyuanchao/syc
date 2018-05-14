@@ -2,8 +2,7 @@
 require_once 'inc/common.php';
 require_once 'db/rpt_overview.php';
 
-ini_set("display_errors","On");
-error_reporting(E_ALL);
+
 header("cache-control:no-cache,must-revalidate");
 header("Content-Type:application/json;charset=utf-8");
 
