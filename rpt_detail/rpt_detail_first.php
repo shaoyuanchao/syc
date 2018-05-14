@@ -10,11 +10,11 @@
 <body>
 
   <div class="page__hd">
-    <h1 class="page__title">统计报表</h1>
+    <h1 class="page__title" id="title"></h1>
     <p class="page__desc"><?php echo date('Y-m-d H:i:s')?></p>
   </div>
   <div id="url_key" style="display:none"><?php echo $_GET['url_key'] ?></div> 
-  <div class="weui-cells__title">最近一周的浏览状况</div>
+  <div class="weui-cells__title">统计折线图</div>
   <div id="count_rows" class="weui-cells">
     <canvas id="myChart" width="400" height="400"></canvas>
   </div>

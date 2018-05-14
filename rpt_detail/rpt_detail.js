@@ -3,33 +3,63 @@ $(function () {
     rpt_detail();
 })
 var url_key = $('#url_key').text();
+var  title = "";
 function rpt_detail() {
     var api_url = 'rpt_detail.php';
     post_data = {"url_key":url_key};
     CallApi(api_url, post_data, function (response) {
-        var first, sec, third, thru, fri, sta, today;
         var rows = response.rows;
-                first= rows.first;
-                sec = rows.sec;
-                third  = rows.third;
-                thru = rows.thru;
-                fri = rows.fri;
-                sta = rows.sta;
-                today = rows.today;
-                var data =[first,sec,third,thru,fri,sta,today];
+        console.log(rows["action_url"]);
+        if(rows["action_url"] == "fnying.com"){
+            title = "风赢科技官网"; 
+        }else if(rows["action_url"] == "hivebanks.com"){
+            title = "蜂巢银行项目官网";  
+        }
+        $("#title").text(title);
+                var data =[rows[6]['action_count'],rows[5]['action_count'],rows[4]['action_count'],rows[3]['action_count'],rows[2]['action_count'],rows[1]['action_count'],rows[0]['action_count']];
                 var ctx = document.getElementById('myChart').getContext('2d');
-                console.log(ctx);
                 var chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"],
+                        labels: [rows[6]['rpt_title'], rows[5]['rpt_title'], rows[4]['rpt_title'], rows[3]['rpt_title'],rows[2]['rpt_title'], rows[1]['rpt_title'],rows[0]['rpt_title']],
                         datasets: [{
-                            label: "last seven days visit show.",
-                            borderColor: 'rgb(255, 99, 132)',
+                            label: title + '近七日访问统计报表',
+                            borderColor: 'rgb(54,162,235)',
+                            fill: false,
+                            borderDash: [5, 5],
+                            pointRadius: 10,
                             data: data,
                         }]
                     },
-                    options: {}
+                    options: {
+                        responsive: true,
+				legend: {
+					position: 'bottom',
+				},
+				hover: {
+					mode: 'index'
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '日期'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '访问量'
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                       
+                    }
+                }
                 });
              
                 

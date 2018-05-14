@@ -1,4 +1,56 @@
 <?php
+
+//======================================
+// 函数: 获取$url相似的七日内日统计报表
+// 参数: $url           报告标题
+// 返回: 七日内统计数据
+//======================================
+function get_rpt_overview_detail($url_key,$today)
+{
+  $endtoday = $today + 24*60*60;
+  $db = new DB_WWW();
+  $sql = "SELECT * FROM rpt_period_url_action WHERE action_url  like '%{$url_key}%' AND from_time_stamp >= '{$today}' AND to_time_stamp <='{$endtoday}'";
+
+  $db->query($sql);
+  $rows = $db->fetchAll();
+  return $rows;
+}
+
+//======================================
+// 函数: 查询$url相似的访问记录
+// 参数: $url           报告url
+// 参数：$today        查询开始的时间戳
+//======================================
+
+function serch_rpt_detail($url_key, $today)
+{
+  $endtime = $today + 24 *60*60;
+  $db = new DB_WWW();
+
+  $sql = "SELECT * FROM cnt_url_action WHERE action_url like '%{$url_key}%' AND action_time >= '{$today}' AND action_time <= '{$endtime}'";
+  // $logid_count = $db->getField($sql, 'logid_count');
+  $db  -> query($sql);
+  // if (is_null($logid_count)) $logid_count = 0;
+  $rows = $db->fetchAll();
+  return $rows;
+}
+
+//======================================
+// 函数: 创建网址访问统计记录
+// 参数: $data          信息数组
+//======================================
+function creat_rpt_detail($data)
+{
+  // 提交时间
+  $db = new DB_WWW();
+  $sql = $db->sqlInsert("rpt_period_url_action", $data);
+  $q_id = $db->query($sql);
+  if ($q_id == 0)
+    return 0;
+  return $db->insertID();
+}
+
+
 //======================================
 // 函数: 取得概要统计报告所有记录
 // 参数: 无
